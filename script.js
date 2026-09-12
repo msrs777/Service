@@ -14,5 +14,5 @@ form.addEventListener("submit", function (event) {
     `Service: ${encodeURIComponent(service)}%0A` +
     `Requirement: ${encodeURIComponent(message)}`;
 
-  window.open(`https://wa.me/919000000000?text=${text}`, "_blank");
+  window.open(`https://wa.me/919937867737?text=${text}`, "_blank");
 });

@@ -23,7 +23,7 @@ form.addEventListener("submit", function (event) {
 
     // Replace 919000000000 with your actual WhatsApp number
     const whatsappURL =
-        `https://wa.me/919000000000?text=${message}`;
+        `https://wa.me/919937867737?text=${message}`;
 
     window.open(whatsappURL, "_blank");
 

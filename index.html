@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Bhubaneswar Home Services - reliable plumbing, electrical, AC, cleaning and appliance repair services at your doorstep.">
   <title>Bhubaneswar Home Services</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <header class="header">
@@ -179,6 +179,6 @@
   </footer>
 
   <a class="floating-whatsapp" href="https://wa.me/919937867737?text=Hello%20Bhubaneswar%20Home%20Services%2C%20I%20need%20a%20home service." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
-  <script src="script.js"></script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

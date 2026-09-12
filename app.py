@@ -1,120 +1,67 @@
-from flask import Flask, request, jsonify, send_from_directory
-import sqlite3
-import os
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
-DATABASE = "bookings.db"
+SERVICES = {
+    "plumbing": ["plumber", "plumbing", "tap", "pipe", "leak", "drain"],
+    "electrical": ["electrician", "electrical", "switch", "socket", "light", "fan", "wiring"],
+    "ac": ["ac", "air conditioner", "cooling"],
+    "cleaning": ["cleaning", "cleaner", "deep cleaning"],
+    "washing_machine": ["washing machine"],
+    "refrigerator": ["refrigerator", "fridge"],
+    "tv": ["tv", "television"],
+    "ro": ["ro", "water purifier", "purifier"],
+    "geyser": ["geyser", "water heater"],
+}
 
+def detect_service(message):
+    text = message.lower()
+    for service, keywords in SERVICES.items():
+        if any(keyword in text for keyword in keywords):
+            return service
+    return None
 
-def get_db_connection():
-    conn = sqlite3.connect(DATABASE)
-    conn.row_factory = sqlite3.Row
-    return conn
+def chatbot_reply(message):
+    text = message.lower().strip()
+    service = detect_service(text)
 
+    if any(word in text for word in ["hello", "hi", "hey"]):
+        return "Hello! 👋 Welcome to Bhubaneswar Home Services. How can we help you today?"
 
-def init_db():
-    conn = sqlite3.connect(DATABASE)
+    if service:
+        names = {
+            "plumbing": "plumbing",
+            "electrical": "electrical work",
+            "ac": "AC service/repair",
+            "cleaning": "home cleaning",
+            "washing_machine": "washing machine repair",
+            "refrigerator": "refrigerator repair",
+            "tv": "TV repair",
+            "ro": "RO/water purifier service",
+            "geyser": "geyser repair",
+        }
+        return f"Sure 👍 We can help with {names[service]}. Please share your location and preferred date/time."
 
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS bookings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            service TEXT NOT NULL,
-            description TEXT NOT NULL,
-            location TEXT NOT NULL,
-            preferred_date TEXT NOT NULL,
-            preferred_time TEXT NOT NULL,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
+    if any(word in text for word in ["price", "cost", "charge", "rate"]):
+        return "The price depends on the service and problem. Please tell us what service you need and your location."
 
-    conn.commit()
-    conn.close()
+    return "Sure 👍 Please tell me what home service you need and your location."
 
-
-@app.route("/")
-def home():
-    return send_from_directory(".", "index.html")
-
-
-@app.route("/<path:filename>")
-def files(filename):
-    return send_from_directory(".", filename)
-
-
-@app.route("/health")
-def health():
-    return jsonify({"status": "OK"})
-
-
-@app.route("/book", methods=["POST"])
-def book_service():
+@app.route("/api/chat", methods=["POST"])
+def chat():
     data = request.get_json()
+    message = data.get("message", "").strip()
 
-    if not data:
-        return jsonify({
-            "success": False,
-            "message": "No data received"
-        }), 400
+    if not message:
+        return jsonify({"error": "Message cannot be empty."}), 400
 
-    name = data.get("name", "").strip()
-    service = data.get("service", "").strip()
-    description = data.get("description", "").strip()
-    location = data.get("location", "").strip()
-    preferred_date = data.get("preferred_date", "").strip()
-    preferred_time = data.get("preferred_time", "").strip()
+    return jsonify({"reply": chatbot_reply(message)})
 
-    if not all([
-        name,
-        service,
-        description,
-        location,
-        preferred_date,
-        preferred_time
-    ]):
-        return jsonify({
-            "success": False,
-            "message": "All fields are required"
-        }), 400
-
-    conn = get_db_connection()
-
-    conn.execute("""
-        INSERT INTO bookings
-        (
-            name,
-            service,
-            description,
-            location,
-            preferred_date,
-            preferred_time
-        )
-        VALUES (?, ?, ?, ?, ?, ?)
-    """, (
-        name,
-        service,
-        description,
-        location,
-        preferred_date,
-        preferred_time
-    ))
-
-    conn.commit()
-    conn.close()
-
-    return jsonify({
-        "success": True,
-        "message": "Booking saved successfully"
-    })
-
-
-init_db()
-
+@app.route("/api/health")
+def health():
+    return jsonify({"status": "ok"})
 
 if __name__ == "__main__":
-    app.run(
-        host="0.0.0.0",
-        port=int(os.environ.get("PORT", 5000)),
-        debug=False
-    )
+    app.run(host="0.0.0.0", port=5000, debug=True)

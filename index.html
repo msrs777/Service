@@ -164,67 +164,76 @@ required
   </footer>
 
   <!-- ========================================
-       FREE WEBSITE CHATBOT
-       ======================================== -->
+     AI SERVICE CHATBOT
+     ======================================== -->
 
-  <button
-    id="chatbotToggle"
-    class="chatbot-toggle"
-    type="button"
-    aria-label="Open chat"
-  >
-    💬
-  </button>
+<button
+  id="chatbotToggle"
+  class="chatbot-toggle"
+  type="button"
+  aria-label="Open chat"
+>
+  💬
+</button>
+
+<div
+  id="chatbotWindow"
+  class="chatbot-window"
+  aria-label="Bhubaneswar Home Services AI Chat"
+>
+
+  <div class="chatbot-header">
+    <div>
+      <strong>🤖 Home Services AI</strong>
+      <small>AI Assistant • We're here to help</small>
+    </div>
+
+    <button
+      id="chatbotClose"
+      class="chatbot-close"
+      type="button"
+      aria-label="Close chat"
+    >
+      ×
+    </button>
+  </div>
 
   <div
-    id="chatbotWindow"
-    class="chatbot-window"
-    aria-label="Bhubaneswar Home Services Chat"
-  >
+    id="chatbotMessages"
+    class="chatbot-messages"
+  ></div>
 
-    <div class="chatbot-header">
-      <div>
-        <strong>🏠 Home Services</strong>
-        <small>We're here to help</small>
-      </div>
+  <div class="chatbot-input-area">
 
-      <button
-        id="chatbotClose"
-        class="chatbot-close"
-        type="button"
-        aria-label="Close chat"
-      >
-        ×
-      </button>
-    </div>
+    <input
+      id="chatbotInput"
+      type="text"
+      placeholder="Ask me anything..."
+      autocomplete="off"
+    >
 
-    <div
-      id="chatbotMessages"
-      class="chatbot-messages"
-    ></div>
-
-    <div class="chatbot-input-area">
-
-      <input
-        id="chatbotInput"
-        type="text"
-        placeholder="Type your answer..."
-        autocomplete="off"
-      >
-
-      <button
-        id="chatbotSend"
-        class="chatbot-send"
-        type="button"
-      >
-        Send
-      </button>
-
-    </div>
+    <button
+      id="chatbotSend"
+      class="chatbot-send"
+      type="button"
+    >
+      Send
+    </button>
 
   </div>
 
-  <a class="floating-whatsapp" href="https://wa.me/919937867737?text=Hello%20Bhubaneswar%20Home%20Services%2C%20I%20need%20a%20home service." target="_blank" rel="noopener" aria-label="Chat on WhatsApp">💬</a>
-  <script src="script.js"></script>
+</div>
+
+<a
+  class="floating-whatsapp"
+  href="https://wa.me/919937867737?text=Hello%20Bhubaneswar%20Home%20Services%2C%20I%20need%20a%20home%20service."
+  target="_blank"
+  rel="noopener"
+  aria-label="Chat on WhatsApp"
+>
+  💬
+</a>
+
+<script src="script.js"></script>
 </body>
 </html>

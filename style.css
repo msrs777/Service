@@ -191,3 +191,12 @@
         bottom: 85px;
     }
 }
+
+.chatbot-send:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.chatbot-message.bot {
+    white-space: pre-line;
+}

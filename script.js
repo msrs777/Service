@@ -1,13 +1,21 @@
 // ========================================
 // BHUBANESWAR HOME SERVICES
-// Website + WhatsApp + Free Chatbot
+// AI SERVICE AGENT
 // ========================================
 
-// Current year
-const yearElement = document.getElementById("year");
+
+// ========================================
+// CURRENT YEAR
+// ========================================
+
+const yearElement =
+    document.getElementById("year");
 
 if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
+
+    yearElement.textContent =
+        new Date().getFullYear();
+
 }
 
 
@@ -15,436 +23,603 @@ if (yearElement) {
 // EXISTING BOOKING FORM → WHATSAPP
 // ========================================
 
-const form = document.getElementById("serviceForm");
+const form =
+    document.getElementById("serviceForm");
 
 if (form) {
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
 
-        const name = document.getElementById("name").value.trim();
-        const service = document.getElementById("service").value;
-        const description = document.getElementById("description").value.trim();
-        const location = document.getElementById("location").value.trim();
-        const date = document.getElementById("date").value;
-        const time = document.getElementById("time").value;
+    form.addEventListener(
+        "submit",
+        function (event) {
 
-        const message =
-            `Hello Bhubaneswar Home Services,\n\n` +
-            `Name: ${name}\n` +
-            `Service: ${service}\n` +
-            `Description: ${description}\n` +
-            `Location: ${location}\n` +
-            `Preferred Date: ${date}\n` +
-            `Preferred Time: ${time}`;
+            event.preventDefault();
 
-        const whatsappURL =
-            `https://wa.me/919937867737?text=${encodeURIComponent(message)}`;
+            const name =
+                document.getElementById("name")
+                .value.trim();
 
-        window.open(whatsappURL, "_blank");
+            const service =
+                document.getElementById("service")
+                .value;
 
-        form.reset();
-    });
+            const description =
+                document.getElementById("description")
+                .value.trim();
+
+            const location =
+                document.getElementById("location")
+                .value.trim();
+
+            const date =
+                document.getElementById("date")
+                .value;
+
+            const time =
+                document.getElementById("time")
+                .value;
+
+
+            const message =
+                `Hello Bhubaneswar Home Services,\n\n` +
+                `Name: ${name}\n` +
+                `Service: ${service}\n` +
+                `Description: ${description}\n` +
+                `Location: ${location}\n` +
+                `Preferred Date: ${date}\n` +
+                `Preferred Time: ${time}`;
+
+
+            const whatsappURL =
+                `https://wa.me/919937867737?text=` +
+                `${encodeURIComponent(message)}`;
+
+
+            window.open(
+                whatsappURL,
+                "_blank"
+            );
+
+
+            form.reset();
+
+        }
+    );
+
 }
 
 
 // ========================================
-// FREE WEBSITE CHATBOT
+// AI CHATBOT
 // ========================================
 
-const chatbotToggle = document.getElementById("chatbotToggle");
-const chatbotWindow = document.getElementById("chatbotWindow");
-const chatbotClose = document.getElementById("chatbotClose");
-const chatbotMessages = document.getElementById("chatbotMessages");
-const chatbotInput = document.getElementById("chatbotInput");
-const chatbotSend = document.getElementById("chatbotSend");
+const chatbotToggle =
+    document.getElementById("chatbotToggle");
+
+const chatbotWindow =
+    document.getElementById("chatbotWindow");
+
+const chatbotClose =
+    document.getElementById("chatbotClose");
+
+const chatbotMessages =
+    document.getElementById("chatbotMessages");
+
+const chatbotInput =
+    document.getElementById("chatbotInput");
+
+const chatbotSend =
+    document.getElementById("chatbotSend");
 
 
-// Only activate chatbot if its HTML exists
-if (
-    chatbotToggle &&
-    chatbotWindow &&
-    chatbotMessages &&
-    chatbotInput &&
-    chatbotSend
+// ========================================
+// BACKEND URL
+// ========================================
+
+// Local development
+const CHATBOT_API =
+    "http://localhost:5000/api/chat";
+
+
+// ========================================
+// CHAT HISTORY
+// ========================================
+
+let chatHistory = [];
+
+
+// ========================================
+// CUSTOMER INFORMATION
+// ========================================
+
+let customerData = {
+
+    name: "",
+    service: "",
+    description: "",
+    location: "",
+    date: "",
+    time: ""
+
+};
+
+
+// ========================================
+// OPEN CHAT
+// ========================================
+
+if (chatbotToggle) {
+
+    chatbotToggle.addEventListener(
+        "click",
+        function () {
+
+            chatbotWindow.classList.add(
+                "active"
+            );
+
+
+            if (
+                chatbotMessages.children.length === 0
+            ) {
+
+                startAIChat();
+
+            }
+
+
+            chatbotInput.focus();
+
+        }
+    );
+
+}
+
+
+// ========================================
+// CLOSE CHAT
+// ========================================
+
+if (chatbotClose) {
+
+    chatbotClose.addEventListener(
+        "click",
+        function () {
+
+            chatbotWindow.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+}
+
+
+// ========================================
+// START AI CHAT
+// ========================================
+
+function startAIChat() {
+
+    const message =
+        "👋 Hi! I'm the Bhubaneswar Home Services assistant. How can I help you today?";
+
+
+    addBotMessage(message);
+
+
+    chatHistory.push({
+
+        role: "assistant",
+
+        content: message
+
+    });
+
+}
+
+
+// ========================================
+// SEND MESSAGE
+// ========================================
+
+if (chatbotSend) {
+
+    chatbotSend.addEventListener(
+        "click",
+        sendChatMessage
+    );
+
+}
+
+
+if (chatbotInput) {
+
+    chatbotInput.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Enter") {
+
+                event.preventDefault();
+
+                sendChatMessage();
+
+            }
+
+        }
+    );
+
+}
+
+
+// ========================================
+// SEND CHAT TO BACKEND
+// ========================================
+
+async function sendChatMessage() {
+
+    const message =
+        chatbotInput.value.trim();
+
+
+    if (!message) {
+        return;
+    }
+
+
+    // Display user message
+    addUserMessage(message);
+
+
+    // Clear input
+    chatbotInput.value = "";
+
+
+    // Save user message
+    chatHistory.push({
+
+        role: "user",
+
+        content: message
+
+    });
+
+
+    // Show typing
+    const typing =
+        addTypingIndicator();
+
+
+    chatbotSend.disabled = true;
+
+
+    try {
+
+        const response =
+            await fetch(
+                CHATBOT_API,
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        message: message,
+
+                        history:
+                            chatHistory
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        typing.remove();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                "Server error"
+            );
+
+        }
+
+
+        const reply =
+            data.reply;
+
+
+        // Display AI reply
+        addBotMessage(reply);
+
+
+        // Save AI response
+        chatHistory.push({
+
+            role: "assistant",
+
+            content: reply
+
+        });
+
+
+        // Detect booking completion
+        checkForBookingIntent(
+            message,
+            reply
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Chatbot error:",
+            error
+        );
+
+
+        typing.remove();
+
+
+        addBotMessage(
+            "Sorry, I'm having trouble connecting right now. You can contact us directly on WhatsApp. 💬"
+        );
+
+
+        showWhatsAppButton();
+
+    }
+
+    finally {
+
+        chatbotSend.disabled = false;
+
+        chatbotInput.focus();
+
+    }
+
+}
+
+
+// ========================================
+// TYPING INDICATOR
+// ========================================
+
+function addTypingIndicator() {
+
+    const element =
+        document.createElement("div");
+
+    element.className =
+        "chatbot-message bot";
+
+    element.textContent =
+        "Typing...";
+
+
+    chatbotMessages.appendChild(
+        element
+    );
+
+
+    scrollChat();
+
+
+    return element;
+
+}
+
+
+// ========================================
+// BOT MESSAGE
+// ========================================
+
+function addBotMessage(message) {
+
+    const element =
+        document.createElement("div");
+
+
+    element.className =
+        "chatbot-message bot";
+
+
+    element.textContent =
+        message;
+
+
+    chatbotMessages.appendChild(
+        element
+    );
+
+
+    scrollChat();
+
+}
+
+
+// ========================================
+// USER MESSAGE
+// ========================================
+
+function addUserMessage(message) {
+
+    const element =
+        document.createElement("div");
+
+
+    element.className =
+        "chatbot-message user";
+
+
+    element.textContent =
+        message;
+
+
+    chatbotMessages.appendChild(
+        element
+    );
+
+
+    scrollChat();
+
+}
+
+
+// ========================================
+// BOOKING DETECTION
+// ========================================
+
+function checkForBookingIntent(
+    userMessage,
+    botReply
 ) {
 
-    let chatbotState = {
-        step: "service",
-        service: "",
-        name: "",
-        description: "",
-        location: "",
-        date: "",
-        time: ""
-    };
+    const text =
+        (
+            userMessage +
+            " " +
+            botReply
+        ).toLowerCase();
 
 
-    // ----------------------------------------
-    // OPEN CHATBOT
-    // ----------------------------------------
+    if (
+        text.includes("send this request") ||
+        text.includes("send request") ||
+        text.includes("booking is ready") ||
+        text.includes("request is ready") ||
+        text.includes("whatsapp")
+    ) {
 
-    chatbotToggle.addEventListener("click", function () {
-        chatbotWindow.classList.add("active");
+        showWhatsAppButton();
 
-        if (chatbotMessages.children.length === 0) {
-            startChatbot();
+    }
+
+}
+
+
+// ========================================
+// WHATSAPP BUTTON
+// ========================================
+
+function showWhatsAppButton() {
+
+    if (
+        document.querySelector(
+            ".chatbot-whatsapp"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const button =
+        document.createElement("button");
+
+
+    button.type =
+        "button";
+
+
+    button.className =
+        "chatbot-whatsapp";
+
+
+    button.textContent =
+        "💬 Send Request on WhatsApp";
+
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            sendChatToWhatsApp();
+
         }
-    });
+    );
 
 
-    // ----------------------------------------
-    // CLOSE CHATBOT
-    // ----------------------------------------
-
-    if (chatbotClose) {
-        chatbotClose.addEventListener("click", function () {
-            chatbotWindow.classList.remove("active");
-        });
-    }
+    chatbotMessages.appendChild(
+        button
+    );
 
 
-    // ----------------------------------------
-    // START CHAT
-    // ----------------------------------------
+    scrollChat();
 
-    function startChatbot() {
-
-        addBotMessage(
-            "Hello! 👋 Welcome to Bhubaneswar Home Services."
-        );
-
-        setTimeout(function () {
-            addBotMessage(
-                "How can we help you today?"
-            );
-
-            showServiceButtons();
-        }, 500);
-    }
+}
 
 
-    // ----------------------------------------
-    // SERVICE BUTTONS
-    // ----------------------------------------
+// ========================================
+// SEND CHAT TO WHATSAPP
+// ========================================
 
-    function showServiceButtons() {
+function sendChatToWhatsApp() {
 
-        const services = [
-            "Plumbing",
-            "Electrical",
-            "AC Service",
-            "Cleaning",
-            "Appliance Repair",
-            "Other"
-        ];
-
-        const container = document.createElement("div");
-
-        container.className = "chatbot-options";
-
-        services.forEach(function (service) {
-
-            const button = document.createElement("button");
-
-            button.type = "button";
-            button.textContent = service;
-            button.className = "chatbot-option";
-
-            button.addEventListener("click", function () {
-
-                addUserMessage(service);
-
-                chatbotState.service = service;
-
-                container.remove();
-
-                setTimeout(function () {
-
-                    addBotMessage(
-                        `Great! You selected ${service}.`
-                    );
-
-                    setTimeout(function () {
-
-                        addBotMessage(
-                            "Please describe the problem or service you need."
-                        );
-
-                        chatbotState.step = "description";
-
-                        chatbotInput.focus();
-
-                    }, 400);
-
-                }, 300);
-
-            });
-
-            container.appendChild(button);
-        });
-
-        chatbotMessages.appendChild(container);
-
-        scrollChat();
-    }
+    let conversation = "";
 
 
-    // ----------------------------------------
-    // SEND MESSAGE
-    // ----------------------------------------
+    chatHistory.forEach(
+        function (message) {
 
-    chatbotSend.addEventListener("click", processChatInput);
+            if (
+                message.role === "user"
+            ) {
 
-    chatbotInput.addEventListener("keydown", function (event) {
+                conversation +=
+                    `Customer: ${message.content}\n`;
 
-        if (event.key === "Enter") {
-            event.preventDefault();
-            processChatInput();
+            }
+
         }
+    );
 
-    });
 
+    const whatsappMessage =
+        `Hello Bhubaneswar Home Services,\n\n` +
+        `I contacted your website AI assistant.\n\n` +
+        `Conversation:\n` +
+        `${conversation}`;
 
-    function processChatInput() {
 
-        const value = chatbotInput.value.trim();
+    const whatsappURL =
+        `https://wa.me/919937867737?text=` +
+        `${encodeURIComponent(
+            whatsappMessage
+        )}`;
 
-        if (!value) {
-            return;
-        }
 
-        addUserMessage(value);
+    window.open(
+        whatsappURL,
+        "_blank"
+    );
 
-        chatbotInput.value = "";
+}
 
-        handleChatStep(value);
-    }
 
+// ========================================
+// SCROLL CHAT
+// ========================================
 
-    // ----------------------------------------
-    // HANDLE CHAT STEPS
-    // ----------------------------------------
+function scrollChat() {
 
-    function handleChatStep(value) {
+    chatbotMessages.scrollTop =
+        chatbotMessages.scrollHeight;
 
-        // Step 1: Service description
-        if (chatbotState.step === "description") {
-
-            chatbotState.description = value;
-
-            chatbotState.step = "name";
-
-            setTimeout(function () {
-
-                addBotMessage(
-                    "Thank you. May I know your name?"
-                );
-
-                chatbotInput.focus();
-
-            }, 400);
-
-            return;
-        }
-
-
-        // Step 2: Name
-        if (chatbotState.step === "name") {
-
-            chatbotState.name = value;
-
-            chatbotState.step = "location";
-
-            setTimeout(function () {
-
-                addBotMessage(
-                    "Thanks! Please enter your service location or area."
-                );
-
-                chatbotInput.focus();
-
-            }, 400);
-
-            return;
-        }
-
-
-        // Step 3: Location
-        if (chatbotState.step === "location") {
-
-            chatbotState.location = value;
-
-            chatbotState.step = "date";
-
-            setTimeout(function () {
-
-                addBotMessage(
-                    "What date would you prefer? Please use YYYY-MM-DD format."
-                );
-
-                chatbotInput.focus();
-
-            }, 400);
-
-            return;
-        }
-
-
-        // Step 4: Date
-        if (chatbotState.step === "date") {
-
-            chatbotState.date = value;
-
-            chatbotState.step = "time";
-
-            setTimeout(function () {
-
-                addBotMessage(
-                    "What time would you prefer? Example: 10:30 AM"
-                );
-
-                chatbotInput.focus();
-
-            }, 400);
-
-            return;
-        }
-
-
-        // Step 5: Time
-        if (chatbotState.step === "time") {
-
-            chatbotState.time = value;
-
-            chatbotState.step = "complete";
-
-            setTimeout(function () {
-
-                showBookingSummary();
-
-            }, 400);
-
-            return;
-        }
-    }
-
-
-    // ----------------------------------------
-    // BOOKING SUMMARY
-    // ----------------------------------------
-
-    function showBookingSummary() {
-
-        addBotMessage(
-            "Perfect! Your service request is ready. ✅"
-        );
-
-        setTimeout(function () {
-
-            addBotMessage(
-                `Service: ${chatbotState.service}\n` +
-                `Name: ${chatbotState.name}\n` +
-                `Problem: ${chatbotState.description}\n` +
-                `Location: ${chatbotState.location}\n` +
-                `Date: ${chatbotState.date}\n` +
-                `Time: ${chatbotState.time}`
-            );
-
-            setTimeout(function () {
-
-                addBotMessage(
-                    "Click the button below to send this request to us on WhatsApp."
-                );
-
-                showWhatsAppButton();
-
-            }, 500);
-
-        }, 500);
-    }
-
-
-    // ----------------------------------------
-    // WHATSAPP BUTTON
-    // ----------------------------------------
-
-    function showWhatsAppButton() {
-
-        const button = document.createElement("button");
-
-        button.type = "button";
-        button.className = "chatbot-whatsapp";
-
-        button.innerHTML = "💬 Send Request on WhatsApp";
-
-        button.addEventListener("click", function () {
-
-            const message =
-                `Hello Bhubaneswar Home Services,\n\n` +
-                `Name: ${chatbotState.name}\n` +
-                `Service: ${chatbotState.service}\n` +
-                `Description: ${chatbotState.description}\n` +
-                `Location: ${chatbotState.location}\n` +
-                `Preferred Date: ${chatbotState.date}\n` +
-                `Preferred Time: ${chatbotState.time}`;
-
-            const whatsappURL =
-                `https://wa.me/919937867737?text=${encodeURIComponent(message)}`;
-
-            window.open(whatsappURL, "_blank");
-
-        });
-
-        chatbotMessages.appendChild(button);
-
-        scrollChat();
-    }
-
-
-    // ----------------------------------------
-    // ADD BOT MESSAGE
-    // ----------------------------------------
-
-    function addBotMessage(message) {
-
-        const messageElement = document.createElement("div");
-
-        messageElement.className = "chatbot-message bot";
-
-        messageElement.textContent = message;
-
-        chatbotMessages.appendChild(messageElement);
-
-        scrollChat();
-    }
-
-
-    // ----------------------------------------
-    // ADD USER MESSAGE
-    // ----------------------------------------
-
-    function addUserMessage(message) {
-
-        const messageElement = document.createElement("div");
-
-        messageElement.className = "chatbot-message user";
-
-        messageElement.textContent = message;
-
-        chatbotMessages.appendChild(messageElement);
-
-        scrollChat();
-    }
-
-
-    // ----------------------------------------
-    // SCROLL CHAT
-    // ----------------------------------------
-
-    function scrollChat() {
-
-        chatbotMessages.scrollTop =
-            chatbotMessages.scrollHeight;
-
-    }
 }

@@ -2,38 +2,30 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 const form = document.getElementById("serviceForm");
 
-form.addEventListener("submit", async function (event) {
+form.addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const booking = {
-        name: document.getElementById("name").value.trim(),
-        service: document.getElementById("service").value,
-        description: document.getElementById("description").value.trim(),
-        location: document.getElementById("location").value.trim(),
-        preferred_date: document.getElementById("date").value,
-        preferred_time: document.getElementById("time").value
-    };
+    const name = document.getElementById("name").value.trim();
+    const service = document.getElementById("service").value;
+    const description = document.getElementById("description").value.trim();
+    const location = document.getElementById("location").value.trim();
+    const date = document.getElementById("date").value;
+    const time = document.getElementById("time").value;
 
-    try {
-        const response = await fetch("/book", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(booking)
-        });
+    const message =
+        `Hello Bhubaneswar Home Services,%0A%0A` +
+        `Name: ${encodeURIComponent(name)}%0A` +
+        `Service: ${encodeURIComponent(service)}%0A` +
+        `Description: ${encodeURIComponent(description)}%0A` +
+        `Location: ${encodeURIComponent(location)}%0A` +
+        `Preferred Date: ${encodeURIComponent(date)}%0A` +
+        `Preferred Time: ${encodeURIComponent(time)}`;
 
-        const result = await response.json();
+    // Replace 919000000000 with your actual WhatsApp number
+    const whatsappURL =
+        `https://wa.me/919000000000?text=${message}`;
 
-        if (result.success) {
-            alert("Your service request has been submitted successfully!");
-            form.reset();
-        } else {
-            alert(result.message || "Something went wrong.");
-        }
+    window.open(whatsappURL, "_blank");
 
-    } catch (error) {
-        console.error(error);
-        alert("Unable to connect to the server.");
-    }
+    form.reset();
 });

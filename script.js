@@ -117,8 +117,7 @@ const chatbotSend =
 
 // Local development
 const CHATBOT_API =
-    "http://localhost:5000/api/chat";
-
+https://bloggers-toner-heroes-roots.trycloudflare.com/api/chat
 
 // ========================================
 // CHAT HISTORY

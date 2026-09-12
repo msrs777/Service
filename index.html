@@ -100,18 +100,73 @@
           </div>
         </div>
         <form class="contact-form" id="serviceForm">
-          <label for="name">Your Name</label>
-          <input id="name" type="text" placeholder="Enter your name" required>
-          <label for="service">Service Needed</label>
-          <select id="service" required>
-            <option value="">Select a service</option>
-            <option>Plumbing</option><option>Electrical</option><option>AC Service</option>
-            <option>Cleaning</option><option>Appliance Repair</option><option>Other</option>
-          </select>
-          <label for="message">What do you need?</label>
-          <textarea id="message" rows="4" placeholder="Describe your requirement" required></textarea>
-          <button class="btn primary full" type="submit">Send Request on WhatsApp</button>
-        </form>
+
+  <label for="name">Your Name</label>
+  <input
+    id="name"
+    type="text"
+    placeholder="Enter your name"
+    required
+  >
+
+  <label for="phone">Phone Number</label>
+  <input
+    id="phone"
+    type="tel"
+    placeholder="Enter your phone number"
+    pattern="[0-9]{10}"
+    maxlength="10"
+    required
+  >
+
+  <label for="service">Service Needed</label>
+  <select id="service" required>
+    <option value="">Select a service</option>
+    <option>Plumbing</option>
+    <option>Electrical</option>
+    <option>AC Service</option>
+    <option>Cleaning</option>
+    <option>Appliance Repair</option>
+    <option>Other</option>
+  </select>
+
+  <label for="message">What do you need?</label>
+  <textarea
+    id="message"
+    rows="4"
+    placeholder="Describe the problem"
+    required
+  ></textarea>
+
+  <label for="address">Service Address</label>
+  <textarea
+    id="address"
+    rows="3"
+    placeholder="Enter complete address"
+    required
+  ></textarea>
+
+  <label for="date">Preferred Date</label>
+  <input
+    id="date"
+    type="date"
+    required
+  >
+
+  <label for="time">Preferred Time</label>
+  <select id="time" required>
+    <option value="">Select preferred time</option>
+    <option>9 AM - 12 PM</option>
+    <option>12 PM - 3 PM</option>
+    <option>3 PM - 6 PM</option>
+    <option>6 PM - 8 PM</option>
+  </select>
+
+  <button class="btn primary full" type="submit">
+    📅 Book Service
+  </button>
+
+</form>
       </div>
     </section>
   </main>

@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, send_from_directory
 import sqlite3
+import os
 
 app = Flask(__name__)
 
@@ -44,12 +45,11 @@ def files(filename):
 
 @app.route("/health")
 def health():
-    return "OK"
+    return jsonify({"status": "OK"})
 
 
 @app.route("/book", methods=["POST"])
 def book_service():
-
     data = request.get_json()
 
     if not data:
@@ -109,13 +109,12 @@ def book_service():
     })
 
 
+init_db()
+
+
 if __name__ == "__main__":
-    init_db()
-
-import os
-
-app.run(
-    host="0.0.0.0",
-    port=int(os.environ.get("PORT", 5000)),
-    debug=False
-)
+    app.run(
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 5000)),
+        debug=False
+    )

@@ -12,10 +12,6 @@ form.addEventListener("submit", async function (event) {
   const preferredDate = document.getElementById("date").value;
   const preferredTime = document.getElementById("time").value;
 
-  // Open the WhatsApp tab immediately.
-  // This prevents the browser from blocking it as a popup.
-  const whatsappTab = window.open("", "_blank");
-
   const bookingData = {
     name: name,
     service: service,
@@ -26,8 +22,9 @@ form.addEventListener("submit", async function (event) {
   };
 
   try {
+
     // Save booking to Flask + SQLite
-    const response = await fetch("http://192.168.52.137:5000/book", {
+    const response = await fetch("/book", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -38,15 +35,11 @@ form.addEventListener("submit", async function (event) {
     const result = await response.json();
 
     if (!result.success) {
-      if (whatsappTab) {
-        whatsappTab.close();
-      }
-
-      alert("Booking could not be saved: " + result.message);
+      alert("Booking failed: " + result.message);
       return;
     }
 
-    // Create WhatsApp message
+    // WhatsApp message
     const whatsappMessage =
       `Hello Bhubaneswar Home Services,\n\n` +
       `I want to book a service.\n\n` +
@@ -60,23 +53,18 @@ form.addEventListener("submit", async function (event) {
     const whatsappURL =
       `https://wa.me/919937867737?text=${encodeURIComponent(whatsappMessage)}`;
 
-    // Send the already-open tab to WhatsApp
-    if (whatsappTab) {
-      whatsappTab.location.href = whatsappURL;
-    } else {
-      // Fallback if the browser did not allow the tab
-      window.location.href = whatsappURL;
-    }
+    // Open WhatsApp
+    window.location.href = whatsappURL;
 
+    // Clear form
     form.reset();
 
   } catch (error) {
+
     console.error("Booking error:", error);
 
-    if (whatsappTab) {
-      whatsappTab.close();
-    }
-
-    alert("Unable to connect to the booking server. Please try again.");
+    alert(
+      "Unable to save booking. Please check that the Flask server is running."
+    );
   }
 });

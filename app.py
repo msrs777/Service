@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 import sqlite3
 
 app = Flask(__name__)
@@ -34,7 +34,12 @@ def init_db():
 
 @app.route("/")
 def home():
-    return "Bhubaneswar Home Services Backend is running!"
+    return send_from_directory(".", "index.html")
+
+
+@app.route("/<path:filename>")
+def files(filename):
+    return send_from_directory(".", filename)
 
 
 @app.route("/health")

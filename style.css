@@ -1,1 +1,620 @@
-*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Arial,Helvetica,sans-serif;color:#172033;background:#fff;line-height:1.6}.container{width:min(1120px,92%);margin:auto}.header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid #e8ebf0}.nav{min-height:72px;display:flex;align-items:center;gap:28px}.logo{font-size:20px;font-weight:800;color:#172033;text-decoration:none;margin-right:auto}.logo span{display:block;font-size:12px;color:#0a7f5a;letter-spacing:.8px;text-transform:uppercase}.nav nav{display:flex;gap:24px}.nav nav a{color:#4d586b;text-decoration:none;font-weight:600}.nav nav a:hover{color:#0a7f5a}.nav-whatsapp{background:#0a7f5a;color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700}.hero{background:linear-gradient(135deg,#f1faf6,#fff);padding:82px 0}.hero-grid{display:grid;grid-template-columns:1.35fr .65fr;gap:70px;align-items:center}.eyebrow{color:#0a7f5a;font-size:13px;font-weight:800;letter-spacing:1.5px;margin-bottom:10px}.hero h1{font-size:clamp(40px,6vw,68px);line-height:1.08;margin-bottom:22px}.hero h1 span{color:#0a7f5a}.hero-text{font-size:19px;color:#596579;max-width:650px}.hero-buttons{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0}.btn{display:inline-block;padding:13px 20px;border-radius:9px;text-decoration:none;font-weight:800;border:2px solid transparent;cursor:pointer;font-size:15px}.primary{background:#0a7f5a;color:#fff}.primary:hover{background:#066b4c}.secondary{border-color:#0a7f5a;color:#0a7f5a;background:#fff}.white{background:#fff;color:#0a7f5a}.full{width:100%;text-align:center}.trust-row{display:flex;gap:30px;margin-top:28px}.trust-row div{display:flex;flex-direction:column}.trust-row strong{font-size:17px}.trust-row small{color:#697386}.hero-card{background:#fff;padding:34px;border-radius:18px;box-shadow:0 15px 45px rgba(23,32,51,.12);border:1px solid #e8ebf0}.card-icon{font-size:52px;margin-bottom:15px}.hero-card h2{margin-bottom:10px}.hero-card p{color:#687386;margin-bottom:25px}.section{padding:85px 0}.light{background:#f7f9fb}.section-heading{text-align:center;margin-bottom:45px}.section-heading h2,.contact h2{font-size:38px;line-height:1.2;margin-bottom:10px}.section-heading>p:last-child,.contact>p{color:#687386}.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.service-card{padding:28px;background:#fff;border:1px solid #e7ebf0;border-radius:14px;transition:.2s}.service-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(23,32,51,.08)}.service-icon{font-size:38px;margin-bottom:12px}.service-card h3{margin-bottom:7px}.service-card p{color:#687386;font-size:15px}.features{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}.features div{padding:15px}.features span{font-size:36px}.features h3{margin:12px 0 5px}.features p{color:#687386;font-size:14px}.cta{background:#0a7f5a;color:#fff;text-align:center;padding:65px 0}.cta h2{font-size:36px;margin-bottom:8px}.cta p{margin-bottom:24px;opacity:.9}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}.contact-details{margin-top:25px}.contact-details p{margin:12px 0;color:#566174}.contact-details a{color:#0a7f5a;text-decoration:none}.contact-form{padding:28px;background:#f7f9fb;border-radius:14px}.contact-form label{display:block;font-weight:700;font-size:14px;margin:12px 0 6px}.contact-form label:first-child{margin-top:0}.contact-form input,.contact-form select,.contact-form textarea{width:100%;padding:12px;border:1px solid #d6dce5;border-radius:8px;background:#fff;font:inherit}.contact-form textarea{resize:vertical}.contact-form button{margin-top:18px}footer{background:#121926;color:#d9dee7;padding:22px 0}.footer-inner{display:flex;justify-content:space-between;gap:20px;font-size:13px}.floating-whatsapp{position:fixed;right:20px;bottom:20px;width:58px;height:58px;border-radius:50%;background:#0a7f5a;color:#fff;display:grid;place-items:center;text-decoration:none;font-size:28px;box-shadow:0 8px 25px rgba(0,0,0,.2)}@media(max-width:800px){.nav{gap:12px}.nav nav{display:none}.nav-whatsapp{padding:9px 12px}.hero{padding:55px 0}.hero-grid,.contact-grid{grid-template-columns:1fr;gap:35px}.services-grid{grid-template-columns:1fr 1fr}.features{grid-template-columns:1fr 1fr}.section{padding:65px 0}.section-heading h2,.contact h2,.cta h2{font-size:30px}}@media(max-width:520px){.logo{font-size:17px}.services-grid,.features{grid-template-columns:1fr}.hero h1{font-size:42px}.hero-text{font-size:17px}.trust-row{gap:18px}.footer-inner{flex-direction:column;gap:4px}}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #172033;
+  background: #ffffff;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1120px, 92%);
+  margin: auto;
+}
+
+
+/* HEADER */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  border-bottom: 1px solid #e7eaf0;
+}
+
+.nav {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.logo span {
+  color: #1769e0;
+}
+
+nav {
+  display: flex;
+  gap: 28px;
+}
+
+nav a {
+  font-weight: 600;
+  color: #4b5563;
+}
+
+nav a:hover {
+  color: #1769e0;
+}
+
+.nav-whatsapp {
+  background: #20b85a;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+
+/* HERO */
+
+.hero {
+  background: linear-gradient(135deg, #eef6ff, #ffffff);
+  padding: 80px 0;
+}
+
+.hero-content {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  align-items: center;
+  gap: 70px;
+}
+
+.eyebrow {
+  color: #1769e0;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: clamp(40px, 6vw, 68px);
+  line-height: 1.05;
+  margin-bottom: 24px;
+}
+
+.hero h1 span {
+  display: block;
+  color: #1769e0;
+}
+
+.hero-description {
+  max-width: 650px;
+  color: #5d6675;
+  font-size: 18px;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 9px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+}
+
+.primary {
+  background: #1769e0;
+  color: white;
+}
+
+.primary:hover {
+  background: #0f55ba;
+}
+
+.secondary {
+  background: white;
+  color: #1769e0;
+  border: 1px solid #cdddf5;
+}
+
+.trust-row {
+  display: flex;
+  gap: 45px;
+  margin-top: 40px;
+}
+
+.trust-row div {
+  display: flex;
+  flex-direction: column;
+}
+
+.trust-row strong {
+  color: #20a957;
+  font-size: 22px;
+}
+
+.trust-row small {
+  color: #657084;
+}
+
+
+/* HERO CARD */
+
+.hero-card {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  box-shadow: 0 15px 45px rgba(20, 45, 80, 0.12);
+  text-align: center;
+}
+
+.card-icon {
+  font-size: 55px;
+  margin-bottom: 15px;
+}
+
+.hero-card h2 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.hero-card p {
+  color: #687386;
+  margin-bottom: 22px;
+}
+
+.small-text {
+  font-size: 13px;
+  margin-top: 15px;
+  margin-bottom: 0 !important;
+}
+
+
+/* BUTTON */
+
+.full {
+  width: 100%;
+}
+
+
+/* SECTIONS */
+
+.section {
+  padding: 85px 0;
+}
+
+.light {
+  background: #f6f9fd;
+}
+
+.section-heading {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 45px;
+}
+
+.section-heading h2 {
+  font-size: 38px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.section-heading p:last-child {
+  color: #6a7484;
+}
+
+
+/* SERVICES */
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
+
+.service-card {
+  background: white;
+  border: 1px solid #e7ebf1;
+  border-radius: 14px;
+  padding: 28px;
+  transition: 0.2s;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(20, 45, 80, 0.08);
+}
+
+.service-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.service-card h3 {
+  font-size: 21px;
+  margin-bottom: 8px;
+}
+
+.service-card p {
+  color: #697386;
+  margin-bottom: 18px;
+}
+
+.service-card a {
+  color: #1769e0;
+  font-weight: 800;
+}
+
+
+/* WHY US */
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+}
+
+.feature {
+  text-align: center;
+  padding: 25px;
+}
+
+.feature span {
+  display: block;
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.feature h3 {
+  margin-bottom: 8px;
+}
+
+.feature p {
+  color: #697386;
+}
+
+
+/* CTA */
+
+.cta {
+  background: #1769e0;
+  color: white;
+  text-align: center;
+  padding: 65px 0;
+}
+
+.cta h2 {
+  font-size: 38px;
+  margin-bottom: 10px;
+}
+
+.cta p {
+  margin-bottom: 25px;
+  opacity: 0.9;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.white {
+  background: white;
+  color: #1769e0;
+}
+
+.whatsapp-cta {
+  background: #20b85a;
+  color: white;
+}
+
+
+/* BOOKING */
+
+.booking-section {
+  background: #ffffff;
+}
+
+.booking-container {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 70px;
+  align-items: start;
+}
+
+.booking-intro h2 {
+  font-size: 40px;
+  line-height: 1.15;
+  margin-bottom: 15px;
+}
+
+.booking-intro > p {
+  color: #687386;
+  margin-bottom: 30px;
+}
+
+.booking-help {
+  background: #f3f7fc;
+  padding: 22px;
+  border-radius: 12px;
+}
+
+.booking-help span {
+  font-size: 28px;
+}
+
+.booking-help strong {
+  display: block;
+  margin-top: 5px;
+}
+
+.booking-help p {
+  color: #697386;
+  margin: 5px 0 15px;
+}
+
+.booking-help a {
+  color: #20a957;
+  font-weight: 800;
+}
+
+
+/* FORM */
+
+.contact-form {
+  background: #ffffff;
+  border: 1px solid #e1e6ee;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 12px 35px rgba(20, 45, 80, 0.07);
+}
+
+.contact-form label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 7px;
+  margin-top: 17px;
+}
+
+.contact-form label:first-child {
+  margin-top: 0;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  border: 1px solid #d6dce5;
+  border-radius: 8px;
+  padding: 13px 14px;
+  font: inherit;
+  color: #172033;
+  background: white;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: #1769e0;
+  box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.1);
+}
+
+.contact-form textarea {
+  resize: vertical;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-row label {
+  margin-top: 17px;
+}
+
+.contact-form button {
+  margin-top: 25px;
+  font-size: 16px;
+}
+
+.form-note {
+  text-align: center;
+  color: #7a8493;
+  font-size: 12px;
+  margin-top: 12px;
+}
+
+
+/* FOOTER */
+
+footer {
+  background: #101827;
+  color: white;
+}
+
+.footer-inner {
+  padding: 40px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.footer-inner p {
+  color: #aeb8c7;
+  margin-top: 5px;
+}
+
+.footer-inner a {
+  color: white;
+}
+
+.footer-bottom {
+  border-top: 1px solid #263143;
+  text-align: center;
+  padding: 18px;
+  color: #aeb8c7;
+  font-size: 13px;
+}
+
+
+/* FLOATING WHATSAPP */
+
+.floating-whatsapp {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #20b85a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+  z-index: 2000;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+
+  .nav {
+    flex-wrap: wrap;
+    padding: 15px 0;
+  }
+
+  nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .hero {
+    padding: 55px 0;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero h1 {
+    font-size: 43px;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .booking-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .nav {
+    justify-content: center;
+  }
+
+  .nav-whatsapp {
+    display: none;
+  }
+
+  nav {
+    font-size: 14px;
+  }
+
+  .hero {
+    padding: 45px 0;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero-description {
+    font-size: 16px;
+  }
+
+  .trust-row {
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .services-grid,
+  .features {
+    grid-template-columns: 1fr;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .section-heading h2,
+  .booking-intro h2,
+  .cta h2 {
+    font-size: 30px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+}

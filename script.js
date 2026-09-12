@@ -1,18 +1,36 @@
-document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("serviceForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
 
-const form = document.getElementById("serviceForm");
-form.addEventListener("submit", function (event) {
-  event.preventDefault();
+    const booking = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value,
+        service: document.getElementById("service").value,
+        message: document.getElementById("message").value,
+        address: document.getElementById("address").value,
+        preferred_date: document.getElementById("date").value,
+        preferred_time: document.getElementById("time").value
+    };
 
-  const name = document.getElementById("name").value.trim();
-  const service = document.getElementById("service").value;
-  const message = document.getElementById("message").value.trim();
+    try {
+        const response = await fetch("/book", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(booking)
+        });
 
-  const text =
-    `Hello Bhubaneswar Home Services,%0A%0A` +
-    `Name: ${encodeURIComponent(name)}%0A` +
-    `Service: ${encodeURIComponent(service)}%0A` +
-    `Requirement: ${encodeURIComponent(message)}`;
+        const result = await response.json();
 
-  window.open(`https://wa.me/919937867737?text=${text}`, "_blank");
+        if (response.ok) {
+            alert("Booking submitted successfully!");
+            document.getElementById("serviceForm").reset();
+        } else {
+            alert(result.error || "Booking failed.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Unable to connect to the server.");
+    }
 });

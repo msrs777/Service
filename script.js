@@ -2,39 +2,46 @@ document.getElementById("year").textContent = new Date().getFullYear();
 
 const form = document.getElementById("serviceForm");
 
-form.addEventListener("submit", function (event) {
-event.preventDefault();
+form.addEventListener("submit", async function (event) {
+  event.preventDefault();
 
-const name = document.getElementById("name").value.trim();
-const service = document.getElementById("service").value;
-const description = document.getElementById("description").value.trim();
-const location = document.getElementById("location").value.trim();
-const date = document.getElementById("date").value;
-const time = document.getElementById("time").value;
+  const name = document.getElementById("name").value.trim();
+  const service = document.getElementById("service").value;
+  const description = document.getElementById("description").value.trim();
+  const location = document.getElementById("location").value.trim();
+  const preferred_date = document.getElementById("date").value;
+  const preferred_time = document.getElementById("time").value;
 
-const formattedDate = date
-? new Date(date + "T00:00:00").toLocaleDateString("en-IN")
-: "";
+  const bookingData = {
+    name: name,
+    service: service,
+    description: description,
+    location: location,
+    preferred_date: preferred_date,
+    preferred_time: preferred_time
+  };
 
-const formattedTime = time
-? new Date("1970-01-01T" + time).toLocaleTimeString("en-IN", {
-hour: "2-digit",
-minute: "2-digit"
-})
-: "";
+  try {
+    const response = await fetch("http://192.168.52.137:5000/book", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(bookingData)
+    });
 
-const message =
-`Hello Bhubaneswar Home Services,\n\n` +
-`I want to book a service.\n\n` +
-`Name: ${name}\n` +
-`Service Type: ${service}\n` +
-`Description: ${description}\n` +
-`Location: ${location}\n` +
-`Preferred Date: ${formattedDate}\n` +
-`Preferred Time: ${formattedTime}`;
+    const result = await response.json();
 
-const whatsappURL =
-`https://wa.me/919937867737?text=${encodeURIComponent(message)}`;
+    if (result.success) {
+      alert("Your service request has been submitted successfully!");
 
-window.open(whatsappURL, "_blank");
+      form.reset();
+    } else {
+      alert("Error: " + result.message);
+    }
+
+  } catch (error) {
+    console.error(error);
+    alert("Unable to connect to the server. Please try again.");
+  }
 });

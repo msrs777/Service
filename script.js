@@ -1,7 +1,7 @@
 document.getElementById("serviceForm").addEventListener("submit", async function (event) {
     event.preventDefault();
 
-    const bookingData = {
+    const booking = {
         name: document.getElementById("name").value,
         phone: document.getElementById("phone").value,
         service: document.getElementById("service").value,
@@ -17,17 +17,16 @@ document.getElementById("serviceForm").addEventListener("submit", async function
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(bookingData)
+            body: JSON.stringify(booking)
         });
 
         const result = await response.json();
 
         if (response.ok) {
             alert("Booking submitted successfully!");
-
             document.getElementById("serviceForm").reset();
         } else {
-            alert(result.error || "Unable to submit booking.");
+            alert(result.error || "Booking failed.");
         }
 
     } catch (error) {

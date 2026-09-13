@@ -163,22 +163,85 @@ required
     </div>
   </footer>
 
+  <!-- Floating WhatsApp button -->
+  <a
+    class="floating-whatsapp"
+    href="https://wa.me/919937867737?text=Hello%20Bhubaneswar%20Home%20Services%2C%20I%20need%20a%20home%20service."
+    target="_blank"
+    rel="noopener"
+    aria-label="Chat on WhatsApp"
+  >
+    💬
+  </a>
+
+  <!-- ========================================
+       CHATBOT
+  ========================================= -->
+
+  <div id="chatbot">
+
+    <button
+      id="chatbotToggle"
+      class="chatbot-toggle"
+      type="button"
+    >
+      💬
     </button>
+
+    <div id="chatbotWindow" class="chatbot-window">
+
+      <div class="chatbot-header">
+
+        <div>
+          <strong>Home Service Assistant</strong>
+          <small>Online</small>
+        </div>
+
+        <button
+          id="chatbotClose"
+          class="chatbot-close"
+          type="button"
+        >
+          ×
+        </button>
+
+      </div>
+
+      <div id="chatbotMessages" class="chatbot-messages">
+
+        <div class="chatbot-message bot">
+          Hello! 👋<br><br>
+          Welcome to Bhubaneswar Home Services.
+          How can I help you today?
+        </div>
+
+      </div>
+
+      <form
+        id="chatbotForm"
+        class="chatbot-input-area"
+      >
+
+        <input
+          id="chatbotInput"
+          type="text"
+          placeholder="Type your message..."
+          autocomplete="off"
+          required
+        >
+
+        <button type="submit">
+          Send
+        </button>
+
+      </form>
+
+    </div>
 
   </div>
 
-</div>
+  <!-- JavaScript must come AFTER chatbot HTML -->
+  <script src="script.js"></script>
 
-<a
-  class="floating-whatsapp"
-  href="https://wa.me/919937867737?text=Hello%20Bhubaneswar%20Home%20Services%2C%20I%20need%20a%20home%20service."
-  target="_blank"
-  rel="noopener"
-  aria-label="Chat on WhatsApp"
->
-  💬
-</a>
-
-<script src="script.js"></script>
 </body>
 </html>

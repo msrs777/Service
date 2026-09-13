@@ -86,7 +86,7 @@ if (form) {
 
                 const response =
                     await fetch(
-                        "http://127.0.0.1:5000/api/bookings",
+                        "https://bhubaneswar-home-services.onrender.com/api/bookings",
                         {
                             method: "POST",
 
